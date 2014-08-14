@@ -4,6 +4,9 @@ require './wd_common'
 
 include WatchDogCommon
 
+#herokuでの書き出し先がtmpなのでsinatraの見る先を変更しておく
+set :public_folder, File.dirname(__FILE__) + '/tmp'
+
 get '/' do
 	"Hello world"
 end
@@ -11,7 +14,7 @@ end
 post '/upload' do
 	if params[:file]
 		t = Time.now
-		save_path = "./public/images/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
+		save_path = "./tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
 		File.open(save_path, 'wb') do |f|
 			f.write params[:file][:tempfile].read
 			@mes = "Upload completed."
@@ -24,7 +27,7 @@ post '/upload' do
 end
 
 get '/images' do
-	imgs = Dir.glob("./public/images/*.jpg")
+	imgs = Dir.glob("./tmp/*.jpg")
 	@newest_img = ""
 
 	imgs.each do |img|
@@ -33,7 +36,8 @@ get '/images' do
 		end
 	end
 
-	@newest_img.sub!("./public/", "./")
+	@newest_img.sub!("./tmp/", "")
+
 	haml :images
 end
 
