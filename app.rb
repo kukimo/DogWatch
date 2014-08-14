@@ -20,7 +20,7 @@ post '/upload' do
 	else
 		pmes = "Upload failed."
 	end
-	redirect 'images'
+	pmes
 end
 
 get '/images' do
