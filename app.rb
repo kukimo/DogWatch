@@ -14,8 +14,8 @@ end
 post '/upload' do
 	if params[:file]
 		t = Time.now
-#		save_path = settings.root + "/tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
-		save_path = "./tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
+		save_path = settings.root + "/tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
+#		save_path = "./tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
 		File.open(save_path, 'wb') do |f|
 			f.write params[:file][:tempfile].read
 			@mes = "Upload completed."
@@ -28,7 +28,8 @@ post '/upload' do
 end
 
 get '/images' do
-	imgs = Dir.glob("./tmp/*.jpg")
+#	imgs = Dir.glob("./tmp/*.jpg")
+	imgs = Dir.glob(settings.root + "/tmp/*.jpg")
 	@newest_img = ""
 
 	imgs.each do |img|
