@@ -16,6 +16,7 @@ post '/upload' do
 		t = Time.now
 #		save_path = settings.root + "/tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
 		save_path = "./tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
+		@dbg_info = save_path
 		File.open(save_path, 'wb') do |f|
 			f.write params[:file][:tempfile].read
 			@mes = "Upload completed."
