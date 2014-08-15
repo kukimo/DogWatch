@@ -32,6 +32,7 @@ post '/settimer' do
 	File.open(save_path, 'wb') do |f|
 		f.write(params[:timer])
 	end
+	"update timer"
 end
 
 get '/images' do
