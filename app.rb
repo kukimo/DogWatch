@@ -16,7 +16,6 @@ post '/upload' do
 		t = Time.now
 #		save_path = settings.root + "/tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
 		save_path = "./tmp/" + t.strftime("%Y%m%d%H%M%S") + ".jpg"
-		@dbg_info = save_path
 		File.open(save_path, 'wb') do |f|
 			f.write params[:file][:tempfile].read
 			@mes = "Upload completed."
@@ -26,6 +25,13 @@ post '/upload' do
 		pmes = "Upload failed."
 	end
 	pmes
+end
+
+post '/settimer' do
+	save_path = "./tmp/timer"
+	File.open(save_path, 'wb') do |f|
+		f.write(params[:timer])
+	end
 end
 
 get '/images' do
@@ -41,5 +47,17 @@ get '/images' do
 	@newest_img.sub!("./tmp/", "")
 
 	haml :images
+end
+
+get '/timer' do
+	schedule = "300"
+
+	if File.exist?("./tmp/timer")
+		File.open("./tmp/timer") do |f|
+			schedule = f.read
+		end
+	end
+
+	schedule
 end
 
