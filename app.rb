@@ -38,6 +38,7 @@ end
 get '/images' do
 	imgs = Dir.glob("./tmp/*.jpg")
 	@newest_img = ""
+	@update_interval = capture_interval
 
 	imgs.each do |img|
 		if @newest_img.empty? || File.mtime(img) > File.mtime(@newest_img)
@@ -51,14 +52,6 @@ get '/images' do
 end
 
 get '/timer' do
-	schedule = "300"
-
-	if File.exist?("./tmp/timer")
-		File.open("./tmp/timer") do |f|
-			schedule = f.read
-		end
-	end
-
-	schedule
+	capture_interval
 end
 

@@ -1,6 +1,8 @@
 !!!html5
 %html
+	%head
+		%script{:type => 'text/javascript'}
+			setTimeout("location.reload()", #{@update_interval.to_i*1000});		
 	%body
 		%img{:src => @newest_img}
-		%p
 

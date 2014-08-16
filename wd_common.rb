@@ -13,8 +13,15 @@ module WatchDogCommon
 		File.delete(oldest_img)
 	end
 
-	def hello
-		p "hello"
+	def capture_interval
+		schedule = "300"
+		if File.exist?("./tmp/timer")
+			File.open("./tmp/timer", "rb") do |f|
+				schedule = f.read
+			end
+		end
+
+		schedule
 	end
 end
 
